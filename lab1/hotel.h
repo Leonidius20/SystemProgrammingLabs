@@ -39,6 +39,8 @@ namespace hotelSystem {
 		std::string getContactPhone() { return contactPhone; }
 		void setContactPhone(std::string contactPhone) { this->contactPhone = contactPhone; }
 
+		int compareWith(Hotel *other);
+
 
 	private:
 		int code;

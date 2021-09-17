@@ -1,20 +1,16 @@
 # Makefile for Hotel system
 
-program: hotel.o hotel.h.gch main.o
-	g++ -o program hotel.o main.o
+SRCS=$(wildcard *.cpp)
+OBJS=$(SRCS:.cpp=.o)
 
 
-hotel.h.gch: hotel.h
-	g++ -c hotel.h
+program: $(OBJS)
+	g++ -o program $^
 
 
-hotel.o: hotel.cpp
-	g++ -c hotel.cpp
-
-
-main.o: main.cpp
-	g++ -c main.cpp
+%.o: %.cpp
+	g++ -c $<
 
 
 clean: 
-	rm -f *.o *.gch program
+	rm -f *.o program

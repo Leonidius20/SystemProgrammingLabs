@@ -20,10 +20,16 @@ int main() {
 	printHotel(&hotel);
 
 	
-	Hotel *hotel2 = new Hotel(2, "Beach View", "USA", "Miami", "Taras Shevchenko Str", 5);
+	Hotel *hotel2 = new Hotel(2, "Beach View", "USA", "Miami", "Taras Shevchenko Str", 4);
 	hotel2->setContactName("Sheev");
 	hotel2->setContactSurname("Palpatine");
 	hotel2->setContactPhone("+187644507623");
 	printHotel(hotel2);
+
+	int result = hotel.compareWith(hotel2);
+	if (result == 0) cout << "Hotels are equivalent" << endl;
+	if (result == -1) cout << hotel2->getName() << " is the superiour hotel" << endl;
+	if (result == 1) cout << hotel.getName() << " is the superiour hotel" << endl;
+
 	delete hotel2;
 }

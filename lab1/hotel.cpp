@@ -15,5 +15,11 @@ namespace hotelSystem {
 		this->contactPatronymic = "";
 		this->contactPhone = "unknown";
 	}
+
+	int Hotel::compareWith(Hotel *other) {
+		if (this->stars > other->stars) return 1;
+		else if (this->stars < other->stars) return -1;
+		else return 0;
+	}
 	
 }
