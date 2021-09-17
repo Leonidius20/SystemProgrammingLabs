@@ -10,6 +10,10 @@ namespace hotelSystem {
 		this->city = city;
 		this->address = address;
 		this->stars = stars;
+		this->contactName = "";
+		this->contactSurname = "";
+		this->contactPatronymic = "";
+		this->contactPhone = "unknown";
 	}
 	
 }
