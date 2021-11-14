@@ -20,6 +20,7 @@ Menu::Menu(Menu::Item *items, int numberOfElements) {
 }
 
 void Menu::showItems() {
+    cout << endl;
     for (int i = 1; i <= numberOfItems; i++) {
         cout << i << " - " << items[i - 1].getTitle() << endl;
     }
