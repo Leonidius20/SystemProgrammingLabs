@@ -110,7 +110,7 @@ void raiseHotelRating(vector<Hotel> &hotels) {
             cout << "This hotel is already rated 5 stars" << endl;
         } else {
             hotel->setStars(hotel->getStars() + 1);
-            cout << hotel->getName() + " is now rated " << hotel->getStars() << "stars" << endl;
+            cout << hotel->getName() + " is now rated " << hotel->getStars() << " stars" << endl;
         }
     }
 }
@@ -123,18 +123,21 @@ void lowerHotelRating(vector<Hotel> &hotels) {
             cout << "This hotel is already rated 1 star" << endl;
         } else {
             hotel->setStars(hotel->getStars() - 1);
-            cout << hotel->getName() + " is now rated " << hotel->getStars() << "stars" << endl;
+            cout << hotel->getName() + " is now rated " << hotel->getStars() << " stars" << endl;
         }
     }
 }
 
 void removeHotel(vector<Hotel> &hotels) {
     string name = inputHotelName();
+    bool deleted = false;
     for (auto hotelItr = hotels.begin(); hotelItr != hotels.end(); hotelItr++) {;
         if (hotelItr->getName() == name) {
             hotels.erase(hotelItr);
+            deleted = true;
             cout << name << " has been obliterated" << endl;
             break;
         }
     }
+    if (!deleted) cout << "Could not find such hotel" << endl;
 }
