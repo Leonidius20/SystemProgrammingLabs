@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <algorithm>
 #include "menu/menu.h"
 #include "hotel/hotel.h"
 
@@ -8,6 +9,10 @@ using namespace std;
 using namespace hotelSystem;
 
 void loadHotels(vector <Hotel> &hotels);
+string inputHotelName();
+Hotel *findHotelByName(vector<Hotel> &hotels, string &name);
+Hotel inputHotelData(unsigned nextCode);
+string inputWithPrompt(const string& prompt);
 
 int main() {
     vector <Hotel> hotels;
@@ -17,27 +22,30 @@ int main() {
 
     Menu::Item items[] = {
         Menu::Item("Add a hotel", [&hotels]() {
-
+            hotels.push_back(inputHotelData(hotels.size() + 1));
         }),
         Menu::Item("Raise a hotel's rating", [&hotels]() {
-
+            string name = inputHotelName();
+            Hotel &hotel = *findHotelByName(hotels, name);
+            if (hotel.getStars() == 5) {
+                cout << "This hotel is already rated 5 stars" << endl;
+            } else hotel.setStars(hotel.getStars() + 1);
         }),
         Menu::Item("Lower a hotel's rating", [&hotels]() {
-
+            string name = inputHotelName();
+            Hotel &hotel = *findHotelByName(hotels, name);
+            if (hotel.getStars() == 1) {
+                cout << "This hotel is already rated 1 star" << endl;
+            } else hotel.setStars(hotel.getStars() - 1);
         }),
         Menu::Item("Remove a hotel", [&hotels]() {
-
+            string name = inputHotelName();
+            Hotel &hotel = *findHotelByName(hotels, name);
+            remove(hotels.begin(), hotels.end(), hotel);
         }),
         Menu::Item("Get hotel info", [&hotels]() {
-            cout << "Input hotel name: ";
-            string name;
-            cin >> name;
-            for (auto &hotel: hotels) {
-                if (hotel.getName() == name) {
-                    printHotel(hotel);
-                    break;
-                }
-            }
+            string name = inputHotelName();
+            printHotel(*findHotelByName(hotels, name));
         }),
         Menu::Item("List all hotels", [&hotels]() {
             for (auto &hotel: hotels) {
@@ -64,4 +72,38 @@ void loadHotels(vector <Hotel> &hotels) {
     hotel2.setContactSurname("Palpatine");
     hotel2.setContactPhone("+187644507623");
     hotels.push_back(hotel2);
+}
+
+string inputHotelName() {
+    return inputWithPrompt("Input hotel name: ");
+}
+
+string inputWithPrompt(const string& prompt) {
+    cout << prompt;
+    string data;
+    cin >> data;
+    return data;
+}
+
+Hotel *findHotelByName(vector<Hotel> &hotels, string &name) {
+    for (auto &hotel: hotels) {
+        if (hotel.getName() == name) {
+           return &hotel;
+        }
+    }
+    return nullptr;
+}
+
+Hotel inputHotelData(unsigned nextCode) {
+    string name = inputHotelName();
+    string city = inputWithPrompt("City: ");
+    string country = inputWithPrompt("Country: ");
+    string address = inputWithPrompt("Address: ");
+
+    cout << "Number of stars: ";
+    int stars;
+    cin >> stars;
+
+    Hotel hotel(nextCode, name, country, city, address, stars);
+    return hotel;
 }
