@@ -9,8 +9,10 @@ namespace hotelSystem {
 	void printHotel(Hotel &hotel) {
 		cout << "Hotel " << hotel.getName() << " " << hotel.getStars() << " stars" << endl;
 		cout << "Location: " << hotel.getAddress() << ", " << hotel.getCity() << ", " << hotel.getCountry() << endl;
-		cout << "Contact: " << hotel.getContactName() << " " << hotel.getContactPatronymic() << " " << hotel.getContactSurname() 
-			<< ", phone: " << hotel.getContactPhone() << endl;
+        if (hotel.getContactName() != "") {
+            cout << "Contact: " << hotel.getContactName() << " " << hotel.getContactPatronymic() << " " << hotel.getContactSurname()
+                 << ", phone: " << hotel.getContactPhone() << endl;
+        }
 		cout << endl;
 	}
 

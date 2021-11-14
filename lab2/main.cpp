@@ -15,42 +15,33 @@ Hotel *findHotelByName(vector<Hotel> &hotels, string &name);
 Hotel inputHotelData(unsigned nextCode);
 string inputWithPrompt(const string& prompt);
 
+void raiseHotelRating(vector<Hotel> &hotels);
+void lowerHotelRating(vector<Hotel> &hotels);
+void removeHotel(vector<Hotel> &hotels);
+
 int main() {
     vector <Hotel> hotels;
 
     loadHotels(hotels);
 
-
     Menu::Item items[] = {
         Menu::Item("Add a hotel", [&hotels]() {
             hotels.push_back(inputHotelData(hotels.size() + 1));
+            cout << "A hotel was successfully added" << endl;
         }),
         Menu::Item("Raise a hotel's rating", [&hotels]() {
-            string name = inputHotelName();
-            Hotel &hotel = *findHotelByName(hotels, name);
-            if (hotel.getStars() == 5) {
-                cout << "This hotel is already rated 5 stars" << endl;
-            } else hotel.setStars(hotel.getStars() + 1);
+            raiseHotelRating(hotels);
         }),
         Menu::Item("Lower a hotel's rating", [&hotels]() {
-            string name = inputHotelName();
-            Hotel &hotel = *findHotelByName(hotels, name);
-            if (hotel.getStars() == 1) {
-                cout << "This hotel is already rated 1 star" << endl;
-            } else hotel.setStars(hotel.getStars() - 1);
+            lowerHotelRating(hotels);
         }),
         Menu::Item("Remove a hotel", [&hotels]() {
-            string name = inputHotelName();
-            for (auto hotelItr = hotels.begin(); hotelItr != hotels.end(); hotelItr++) {;
-                if (hotelItr->getName() == name) {
-                    hotels.erase(hotelItr);
-                    break;
-                }
-            }
+            removeHotel(hotels);
         }),
         Menu::Item("Get hotel info", [&hotels]() {
             string name = inputHotelName();
-            printHotel(*findHotelByName(hotels, name));
+            Hotel *hotel = findHotelByName(hotels, name);
+            if (hotel) printHotel(*hotel);
         }),
         Menu::Item("List all hotels", [&hotels]() {
             for (auto &hotel: hotels) {
@@ -96,6 +87,7 @@ Hotel *findHotelByName(vector<Hotel> &hotels, string &name) {
            return &hotel;
         }
     }
+    cout << "Couldn't find that hotel" << endl;
     return nullptr;
 }
 
@@ -108,4 +100,41 @@ Hotel inputHotelData(unsigned nextCode) {
 
     Hotel hotel(nextCode, name, country, city, address, stars);
     return hotel;
+}
+
+void raiseHotelRating(vector<Hotel> &hotels) {
+    string name = inputHotelName();
+    Hotel *hotel = findHotelByName(hotels, name);
+    if (hotel) {
+        if (hotel->getStars() == 5) {
+            cout << "This hotel is already rated 5 stars" << endl;
+        } else {
+            hotel->setStars(hotel->getStars() + 1);
+            cout << hotel->getName() + " is now rated " << hotel->getStars() << "stars" << endl;
+        }
+    }
+}
+
+void lowerHotelRating(vector<Hotel> &hotels) {
+    string name = inputHotelName();
+    Hotel *hotel = findHotelByName(hotels, name);
+    if (hotel) {
+        if (hotel->getStars() == 1) {
+            cout << "This hotel is already rated 1 star" << endl;
+        } else {
+            hotel->setStars(hotel->getStars() - 1);
+            cout << hotel->getName() + " is now rated " << hotel->getStars() << "stars" << endl;
+        }
+    }
+}
+
+void removeHotel(vector<Hotel> &hotels) {
+    string name = inputHotelName();
+    for (auto hotelItr = hotels.begin(); hotelItr != hotels.end(); hotelItr++) {;
+        if (hotelItr->getName() == name) {
+            hotels.erase(hotelItr);
+            cout << name << " has been obliterated" << endl;
+            break;
+        }
+    }
 }
