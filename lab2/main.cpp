@@ -85,7 +85,7 @@ string inputHotelName() {
 string inputWithPrompt(const string& prompt) {
     cout << prompt;
     string data;
-    cin >> data;
+    getline(cin, data);
     return data;
 }
 
