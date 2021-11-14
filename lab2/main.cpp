@@ -40,8 +40,12 @@ int main() {
         }),
         Menu::Item("Remove a hotel", [&hotels]() {
             string name = inputHotelName();
-            Hotel &hotel = *findHotelByName(hotels, name);
-            remove(hotels.begin(), hotels.end(), hotel);
+            for (auto hotelItr = hotels.begin(); hotelItr != hotels.end(); hotelItr++) {;
+                if (hotelItr->getName() == name) {
+                    hotels.erase(hotelItr);
+                    break;
+                }
+            }
         }),
         Menu::Item("Get hotel info", [&hotels]() {
             string name = inputHotelName();
