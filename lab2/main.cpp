@@ -2,6 +2,7 @@
 #include <vector>
 #include <string>
 #include <algorithm>
+#include <limits>
 #include "menu/menu.h"
 #include "hotel/hotel.h"
 
@@ -83,6 +84,8 @@ string inputHotelName() {
 }
 
 string inputWithPrompt(const string& prompt) {
+    cin.ignore(numeric_limits<streamsize>::max());
+    cin.clear();
     cout << prompt;
     string data;
     getline(cin, data);
