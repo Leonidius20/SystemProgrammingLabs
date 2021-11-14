@@ -28,8 +28,10 @@ void Menu::showItems() {
 
 void Menu::askForSelection() {
     cout << "Choose an action: ";
-    int action;
-    cin >> action;
+    string actionStr;
+    getline(cin, actionStr);
+    int action = stoi(actionStr);
+
     if (action > numberOfItems || action < 1) {
         cout << "Invalid selection" << endl;
         askForSelection();

@@ -84,8 +84,6 @@ string inputHotelName() {
 }
 
 string inputWithPrompt(const string& prompt) {
-    cin.ignore(numeric_limits<streamsize>::max());
-    cin.clear();
     cout << prompt;
     string data;
     getline(cin, data);
