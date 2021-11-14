@@ -103,10 +103,7 @@ Hotel inputHotelData(unsigned nextCode) {
     string city = inputWithPrompt("City: ");
     string country = inputWithPrompt("Country: ");
     string address = inputWithPrompt("Address: ");
-
-    cout << "Number of stars: ";
-    int stars;
-    cin >> stars;
+    int stars = stoi(inputWithPrompt("Stars: "));
 
     Hotel hotel(nextCode, name, country, city, address, stars);
     return hotel;
