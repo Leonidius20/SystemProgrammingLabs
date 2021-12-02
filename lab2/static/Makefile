@@ -1,7 +1,7 @@
 # Makefile for Hotel system
 
 all: main.o libhotel.a libmenu.a
-	g++ -o all main.o -L. -lhotel -lmenu
+	g++ -o binary  main.o -L. -lhotel -lmenu
 
 main.o: main.cpp
 	g++ -c main.cpp

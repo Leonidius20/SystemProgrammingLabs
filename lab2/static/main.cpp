@@ -17,10 +17,11 @@ string inputWithPrompt(const string& prompt);
 
 void raiseHotelRating(vector<Hotel> &hotels);
 void lowerHotelRating(vector<Hotel> &hotels);
-void removeHotel(vector<Hotel> &hotels);
+void removeHotel(vector<Hotel> &hotels, vector<Hotel> &removedHotels);
 
 int main() {
     vector <Hotel> hotels;
+    vector <Hotel> removedHotels;
 
     loadHotels(hotels);
 
@@ -35,18 +36,21 @@ int main() {
         Menu::Item("Lower a hotel's rating", [&hotels]() {
             lowerHotelRating(hotels);
         }),
-        Menu::Item("Remove a hotel", [&hotels]() {
-            removeHotel(hotels);
+        Menu::Item("Remove a hotel", [&hotels, &removedHotels]() {
+            removeHotel(hotels, removedHotels);
         }),
         Menu::Item("Get hotel info", [&hotels]() {
             string name = inputHotelName();
             Hotel *hotel = findHotelByName(hotels, name);
             if (hotel) printHotel(*hotel);
         }),
-        Menu::Item("List all hotels", [&hotels]() {
+        Menu::Item("List all hotels", [&hotels, &removedHotels]() {
             for (auto &hotel: hotels) {
                 cout << hotel.getName() << endl;
             }
+            cout << endl << "Removed hotels: " << endl;
+            for (auto &hotel: removedHotels)
+                cout << hotel.getName() << endl;
         }),
         Menu::Item("Exit", []() {}, true)
     };
@@ -128,12 +132,13 @@ void lowerHotelRating(vector<Hotel> &hotels) {
     }
 }
 
-void removeHotel(vector<Hotel> &hotels) {
+void removeHotel(vector<Hotel> &hotels, vector<Hotel> &removedHotels) {
     string name = inputHotelName();
     bool deleted = false;
     for (auto hotelItr = hotels.begin(); hotelItr != hotels.end(); hotelItr++) {;
         if (hotelItr->getName() == name) {
             hotels.erase(hotelItr);
+            removedHotels.push_back(*hotelItr);
             deleted = true;
             cout << name << " has been obliterated" << endl;
             break;
